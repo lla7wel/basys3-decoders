@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 430" font-family="Helvetica, Arial, sans-serif">
+  <defs>
+    <style>
+      .wire { stroke: #334155; stroke-width: 2; fill: none; }
+      .gate { stroke: #1f2937; stroke-width: 2.5; fill: #f8fafc; }
+      .dot  { fill: #334155; }
+      .lbl  { fill: #111827; font-size: 15px; font-weight: bold; }
+      .eq   { fill: #6b7280; font-size: 12px; font-family: Menlo, Consolas, monospace; }
+      .ttl  { fill: #111827; font-size: 17px; font-weight: bold; }
+      .sub  { fill: #6b7280; font-size: 12.5px; }
+    </style>
+  </defs>
+
+  <rect x="1" y="1" width="778" height="428" rx="10" fill="#ffffff" stroke="#d1d5db"/>
+  <text class="ttl" x="24" y="32">decoder_2to4 — gate-level structure</text>
+  <text class="sub" x="24" y="52">Active-low outputs: exactly one output is 0 for each select value</text>
+
+  <!-- input A1: enters at y=60, rail at x=190 -->
+  <text class="lbl" x="40" y="65">A1</text>
+  <polyline class="wire" points="70,60 190,60 190,348"/>
+  <!-- input A0: enters at y=90, rail at x=150 -->
+  <text class="lbl" x="40" y="95">A0</text>
+  <polyline class="wire" points="70,90 150,90 150,332"/>
+
+  <!-- taps: A0 rail -->
+  <circle class="dot" cx="150" cy="122" r="3.5"/>
+  <circle class="dot" cx="150" cy="160" r="3.5"/>
+  <circle class="dot" cx="150" cy="262" r="3.5"/>
+  <!-- taps: A1 rail -->
+  <circle class="dot" cx="190" cy="138" r="3.5"/>
+  <circle class="dot" cx="190" cy="208" r="3.5"/>
+  <circle class="dot" cx="190" cy="230" r="3.5"/>
+
+  <!-- inverter for A0' (center y=160) -->
+  <line class="wire" x1="150" y1="160" x2="230" y2="160"/>
+  <path class="gate" d="M230,145 L264,160 L230,175 Z"/>
+  <circle class="gate" cx="269" cy="160" r="4.5"/>
+  <text class="eq" x="228" y="138">A0'</text>
+  <polyline class="wire" points="273.5,160 330,160 330,192 488,192"/>
+
+  <!-- inverter for A1' (center y=230) -->
+  <line class="wire" x1="190" y1="230" x2="230" y2="230"/>
+  <path class="gate" d="M230,215 L264,230 L230,245 Z"/>
+  <circle class="gate" cx="269" cy="230" r="4.5"/>
+  <text class="eq" x="228" y="208">A1'</text>
+  <polyline class="wire" points="273.5,230 360,230 360,278 488,278"/>
+
+  <!-- wires from rails to gates -->
+  <line class="wire" x1="150" y1="122" x2="488" y2="122"/> <!-- A0 -> G1 -->
+  <line class="wire" x1="190" y1="138" x2="488" y2="138"/> <!-- A1 -> G1 -->
+  <line class="wire" x1="190" y1="208" x2="488" y2="208"/> <!-- A1 -> G2 -->
+  <line class="wire" x1="150" y1="262" x2="488" y2="262"/> <!-- A0 -> G3 -->
+  <line class="wire" x1="150" y1="332" x2="488" y2="332"/> <!-- A0 -> G4 -->
+  <line class="wire" x1="190" y1="348" x2="488" y2="348"/> <!-- A1 -> G4 -->
+
+  <!-- G1: OR, X0, center y=130 -->
+  <path class="gate" d="M480,108 Q494,130 480,152 Q515,152 550,130 Q515,108 480,108 Z"/>
+  <line class="wire" x1="550" y1="130" x2="640" y2="130"/>
+  <text class="lbl" x="650" y="135">X0</text>
+  <text class="eq" x="480" y="100">X0 = A0 + A1</text>
+
+  <!-- G2: OR, X1, center y=200 -->
+  <path class="gate" d="M480,178 Q494,200 480,222 Q515,222 550,200 Q515,178 480,178 Z"/>
+  <line class="wire" x1="550" y1="200" x2="640" y2="200"/>
+  <text class="lbl" x="650" y="205">X1</text>
+  <text class="eq" x="480" y="170">X1 = A0' + A1</text>
+
+  <!-- G3: OR, X2, center y=270 -->
+  <path class="gate" d="M480,248 Q494,270 480,292 Q515,292 550,270 Q515,248 480,248 Z"/>
+  <line class="wire" x1="550" y1="270" x2="640" y2="270"/>
+  <text class="lbl" x="650" y="275">X2</text>
+  <text class="eq" x="480" y="240">X2 = A0 + A1'</text>
+
+  <!-- G4: NAND, X3, center y=340 -->
+  <path class="gate" d="M488,318 L528,318 A22,22 0 0 1 528,362 L488,362 Z"/>
+  <circle class="gate" cx="554.5" cy="340" r="4.5"/>
+  <line class="wire" x1="559" y1="340" x2="640" y2="340"/>
+  <text class="lbl" x="650" y="345">X3</text>
+  <text class="eq" x="480" y="310">X3 = (A0 · A1)'</text>
+
+  <text class="sub" x="24" y="405">On the Basys 3, X drives active-high LEDs: the selected (low) output is the single LED that turns OFF.</text>
+</svg>

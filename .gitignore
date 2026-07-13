@@ -1,0 +1,24 @@
+# Build and simulation outputs
+build/
+
+# GHDL
+*.cf
+*.o
+*.ghw
+*.vcd
+
+# Vivado
+*.jou
+*.log
+*.str
+*.xpr
+*.bit
+.Xil/
+*.cache/
+*.hw/
+*.runs/
+*.sim/
+*.gen/
+
+# OS
+.DS_Store
