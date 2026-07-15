@@ -1,0 +1,18 @@
+name: sim
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  testbenches:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install GHDL
+        uses: ghdl/setup-ghdl@v1
+        with:
+          version: nightly
+          backend: mcode
+      - name: Run all self-checking testbenches
+        run: ./scripts/run_tests.sh
